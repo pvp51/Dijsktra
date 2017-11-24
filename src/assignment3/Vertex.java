@@ -6,24 +6,13 @@ import java.util.List;
 public class Vertex {
 
     private List<Edge> neighborhood;
-    private String label;
+    private String name;
     
-    /**
-     * 
-     * @param label The unique label associated with this Vertex
-     */
     public Vertex(String label){
-        this.label = label;
+        this.name = label;
         this.neighborhood = new ArrayList<>();
     }
     
-    
-    /**
-     * This method adds an Edge to the incidence neighborhood of this graph iff
-     * the edge is not already present. 
-     * 
-     * @param edge The edge to add
-     */
     public void addNeighbor(Edge edge){
         if(this.neighborhood.contains(edge)){
             return;
@@ -40,8 +29,12 @@ public class Vertex {
         return this.neighborhood.size();
     }
     
-    public String getLabel(){
-        return this.label;
+    public String getName(){
+        return this.name;
+    }
+    
+    public Edge getNeighbor(int index){
+        return this.neighborhood.get(index);
     }
     
     public List<Edge> getNeighbors(){
@@ -49,7 +42,7 @@ public class Vertex {
     }
     
     public String toString(){
-        return "Vertex " + label;
+        return "Vertex " + name;
     }
     
 }

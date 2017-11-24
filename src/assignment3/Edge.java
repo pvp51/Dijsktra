@@ -6,7 +6,7 @@ public class Edge {
     private int weight;
     
     public Edge(Vertex one, Vertex two, int weight){
-        this.one = (one.getLabel().compareTo(two.getLabel()) <= 0) ? one : two;
+        this.one = (one.getName().compareTo(two.getName()) <= 0) ? one : two;
         this.two = (this.one == one) ? two : one;
         this.weight = weight;
     }

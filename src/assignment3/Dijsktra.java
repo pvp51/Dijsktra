@@ -20,25 +20,12 @@ public class Dijsktra {
 
 	public static void main(String[] args) {
 		g = new Graph();
-		Vertex vLAX = new Vertex("LAX");
-		Vertex vDFW = new Vertex("DFW");
-		Vertex vSFO = new Vertex("SFO");
-		Vertex vMIA = new Vertex("MIA");
-		Edge e1 = new Edge(vLAX,vDFW,1235);
-		Edge e2 = new Edge(vSFO,vDFW,1464);
-		Edge e3 = new Edge(vLAX,vSFO,337);
-		Edge e4 = new Edge(vLAX,vMIA,2342);
-		Edge e5 = new Edge(vDFW,vMIA,1121);
-
-		g.addVertex(vLAX);
-		g.addVertex(vDFW);
-		g.addVertex(vSFO);
-		g.addVertex(vMIA);
-		g.addEdge(e1);
-		g.addEdge(e2);
-		g.addEdge(e3);
-		g.addEdge(e4);
-		g.addEdge(e5);
+		
+		g.addEdge("LAX","DFW",1235);
+		g.addEdge("SFO","DFW",1464);
+		g.addEdge("LAX","SFO",337);
+		g.addEdge("LAX","MIA",2342);
+		g.addEdge("DFW","MIA",1121);
 
 		System.out.println(g.getEdges());
 		System.out.println(g.getVertices());
