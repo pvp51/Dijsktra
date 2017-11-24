@@ -15,6 +15,8 @@ public class Dijsktra {
 	private static Set<Vertex> cloud;
 	private static Map<Vertex, Vertex> path;
 	private static Graph g;
+	private static String source = "LAX";
+	private static String destination = "MIA";
 
 	public static void main(String[] args) {
 		g = new Graph();
@@ -41,15 +43,12 @@ public class Dijsktra {
 		System.out.println(g.getEdges());
 		System.out.println(g.getVertices());
 
-		String source = "LAX";
-		String destination = "MIA";
-
-		dijsktra(g, g.getVertex(source));
-		System.out.println(getPath(g.getVertex(destination)));
+		System.out.println("Shortest Distance: "+dijsktra(g, g.getVertex(source)));
+		System.out.println("Shortest Path: "+getPath(g.getVertex(destination)));
 
 	}
 	
-	private static void dijsktra(Graph g, Vertex v) {
+	private static Integer dijsktra(Graph g, Vertex v) {
 		vertexDist = new HashMap<>();
 		notSeenVertices = new HashSet<>();
 		cloud = new HashSet<>();
@@ -63,8 +62,8 @@ public class Dijsktra {
 			notSeenVertices.remove(u);
 			calculateShortestDistance(u);
 		}
-
 		System.out.println(vertexDist);
+		return vertexDist.get(g.getVertex(destination));
 
 	}
 	

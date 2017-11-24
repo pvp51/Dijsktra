@@ -38,13 +38,5 @@ public class Edge {
     public String toString(){
         return "({" + one + ", " + two + "}, " + weight + ")";
     }
-    
-    /**
-     * 
-     * @return int The hash code for this Edge 
-     */
-    public int hashCode(){
-        return (one.getLabel() + two.getLabel()).hashCode(); 
-    }
       
 }

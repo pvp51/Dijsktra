@@ -32,12 +32,6 @@ public class Vertex {
         this.neighborhood.add(edge);
     }
     
-    
-    /**
-     * 
-     * @param other The edge for which to search
-     * @return true iff other is contained in this.neighborhood
-     */
     public boolean containsNeighbor(Edge other){
         return this.neighborhood.contains(other);
     }
