@@ -12,51 +12,47 @@ public class Graph {
 		this.edges = new HashMap<Integer, Edge>();
 	}
 
-	public boolean addEdge(String oneLabel, String twoLabel, int weight){
-		Vertex one = null;
-		Vertex first = this.vertices.get(oneLabel);
+	public boolean addEdge(String v1Label, String v2Label, int weight){
+		Vertex v1 = null;
+		Vertex first = this.vertices.get(v1Label);
 		if(first==null){
-			one = new Vertex(oneLabel);
-			addVertex(one);
+			v1 = new Vertex(v1Label);
+			addVertex(v1);
 		}
 		else{
-			one = first;
+			v1 = first;
 		}
-		Vertex second = this.vertices.get(twoLabel);
-		Vertex two = null;
+		Vertex second = this.vertices.get(v2Label);
+		Vertex v2 = null;
 		if(second==null){
-			two = new Vertex(twoLabel);
-			addVertex(two);
+			v2 = new Vertex(v2Label);
+			addVertex(v2);
 		}
 		else{
-			two = second;
+			v2 = second;
 		}
-		if(addEdge(one,two, weight))
+		if(addEdge(v1,v2, weight))
 			return true;
 		else
 			return false;
 
 	}
 
-	public boolean addEdge(Vertex one, Vertex two, int weight){
-		if(one.equals(two)){
+	public boolean addEdge(Vertex v1, Vertex v2, int weight){
+		if(v1.equals(v2)){
 			return false;   
 		}
-
-		//ensures the Edge is not in the Graph
-		Edge e = new Edge(one, two, weight);
+		Edge e = new Edge(v1, v2, weight);
 		if(edges.containsKey(e.hashCode())){
 			return false;
 		}
-
-		//and that the Edge isn't already incident to one of the vertices
-		else if(one.containsNeighbor(e) || two.containsNeighbor(e)){
+		else if(v1.containsNeighbor(e) || v2.containsNeighbor(e)){
 			return false;
 		}
 
 		edges.put(e.hashCode(), e);
-		one.addNeighbor(e);
-		two.addNeighbor(e);
+		v1.addNeighbor(e);
+		v2.addNeighbor(e);
 		return true;
 	}
 
@@ -65,7 +61,6 @@ public class Graph {
 	}
 
 	public boolean addVertex(Vertex vertex){
-		
 		vertices.put(vertex.getName(), vertex);
 		return true;
 	}

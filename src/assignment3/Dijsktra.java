@@ -66,82 +66,74 @@ public class Dijsktra {
 		notSeenVertices.add(v);
 
 		while(!notSeenVertices.isEmpty()){
-			Vertex u = getMinimum(notSeenVertices);
+			Vertex u = null;
+			int lowestDistance = Integer.MAX_VALUE;
+			for (Vertex vert: notSeenVertices) {
+				int vertexDistance = vertexDist.get(vert);
+				if (vertexDistance < lowestDistance) {
+					lowestDistance = vertexDistance;
+					u = vert;
+				}
+			}
+			
 			cloud.add(u);
 			notSeenVertices.remove(u);
-			calculateShortestDistance(u);
+		
+			List<Vertex> z = new ArrayList<>();
+
+			for(Edge e: u.getNeighbors()){
+				if(e.getV1()!= u && !cloud.contains(e.getV1())){
+					z.add(e.getV1());
+				}
+				else if(!cloud.contains(e.getV2())){
+					z.add(e.getV2());
+				}
+			}
+
+			for (Vertex dest : z) {
+				int du = vertexDist.get(u) == null ? Integer.MAX_VALUE : vertexDist.get(u);
+				int wuz = getDistance(u, dest);
+				int dz = vertexDist.get(dest) == null ? Integer.MAX_VALUE : vertexDist.get(dest);
+				if (du + wuz < dz) {
+					dz = du + wuz;
+					vertexDist.put(dest, dz);
+					path.put(dest, u);
+					notSeenVertices.add(dest);
+				}
+			}
 		}
 		System.out.println(vertexDist);
 		return vertexDist.get(g.getVertex(destination));
 
 	}
 	
-	public static List<Vertex> getPath(Vertex target) {
+	public static List<Vertex> getPath(Vertex dest) {
         List<Vertex> tempPath = new ArrayList<>();
-        Vertex step = target;
-        // check if a path exists
-        if (path.get(step) == null) {
+        Vertex via = dest;
+        
+        if (path.get(via) == null) {
             return null;
         }
-        tempPath.add(step);
-        while (path.get(step) != null) {
-            step = path.get(step);
-            tempPath.add(step);
+        tempPath.add(via);
+        while (path.get(via) != null) {
+            via = path.get(via);
+            tempPath.add(via);
         }
         Collections.reverse(tempPath);
         return tempPath;
     }
 
-	private static Vertex getMinimum(Set<Vertex> notSeenVertices) {
-		Vertex closestVertex = null;
-		int lowestDistance = Integer.MAX_VALUE;
-		for (Vertex v: notSeenVertices) {
-			int vertexDistance = vertexDist.get(v);
-			if (vertexDistance < lowestDistance) {
-				lowestDistance = vertexDistance;
-				closestVertex = v;
-			}
-		}
-		return closestVertex;
-	}
-
 	private static int getDistance(Vertex src, Vertex dest) {
 		for (Edge edge : g.getEdges()) {
-			if (edge.getOne().equals(src) && edge.getTwo().equals(dest)) {
+			if (edge.getV1().equals(src) && edge.getV2().equals(dest)) {
 				return edge.getWeight();
 			}
-			else if(edge.getOne().equals(dest) && edge.getTwo().equals(src)) {
+			else if(edge.getV1().equals(dest) && edge.getV2().equals(src)) {
 				return edge.getWeight();
 			}
 		}
 		return Integer.MAX_VALUE;
 	}
-
-	private static int getMinDistance(Vertex dest) { 
-		return vertexDist.get(dest) == null ? Integer.MAX_VALUE : vertexDist.get(dest);
-	}
-
-	private static void calculateShortestDistance(Vertex u) {
-		List<Vertex> z = new ArrayList<>();
-
-		for(Edge e: u.getNeighbors()){
-			if(e.getOne()!= u && !cloud.contains(e.getOne())){
-				z.add(e.getOne());
-			}
-			else if(!cloud.contains(e.getTwo())){
-				z.add(e.getTwo());
-			}
-		}
-
-		for (Vertex target : z) {
-			if (getMinDistance(u) + getDistance(u, target) < getMinDistance(target)) {
-				vertexDist.put(target, getMinDistance(u) + getDistance(u, target));
-				path.put(target, u);
-				notSeenVertices.add(target);
-			}
-		}
-	}
-
 }
 
 
