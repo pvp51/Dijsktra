@@ -1,11 +1,15 @@
 package assignment3;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Dijsktra {
@@ -18,19 +22,37 @@ public class Dijsktra {
 	private static String source = "LAX";
 	private static String destination = "MIA";
 
-	public static void main(String[] args) {
-		g = new Graph();
+	public static void main(String[] args) throws IOException {
+		String fileName="";
+		System.out.println("Please enter the input file name: ");
+		@SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);		
+		fileName = scan.nextLine();
 		
-		g.addEdge("LAX","DFW",1235);
-		g.addEdge("SFO","DFW",1464);
-		g.addEdge("LAX","SFO",337);
-		g.addEdge("LAX","MIA",2342);
-		g.addEdge("DFW","MIA",1121);
+		BufferedReader in = new BufferedReader(new FileReader(fileName));
+		String line;
+		String[] array = null;
+		g = new Graph();
+		System.out.println("Building graph now");
+		while((line = in.readLine()) != null)
+		{
+			System.out.println(line);
+			array = line.split("\t");
+			g.addEdge(array[0], array[1], Integer.parseInt(array[2]));
+		}
+		in.close();
+		System.out.println("Graph buidling Complete");
+		
+		System.out.println("Please enter the source vertex: ");		
+		source = scan.nextLine();
+		System.out.println("Please enter the destination vertex: ");		
+		destination = scan.nextLine();
 
 		System.out.println(g.getEdges());
 		System.out.println(g.getVertices());
-
+		System.out.println("Calculating Shortest Distance now");
 		System.out.println("Shortest Distance: "+dijsktra(g, g.getVertex(source)));
+		System.out.println("Calculating Shortest Path");
 		System.out.println("Shortest Path: "+getPath(g.getVertex(destination)));
 
 	}
@@ -95,9 +117,8 @@ public class Dijsktra {
 		return Integer.MAX_VALUE;
 	}
 
-	private static int getShortestDistance(Vertex dest) {
-		Integer d = vertexDist.get(dest);
-		return d == null ? Integer.MAX_VALUE : d;
+	private static int getMinDistance(Vertex dest) { 
+		return vertexDist.get(dest) == null ? Integer.MAX_VALUE : vertexDist.get(dest);
 	}
 
 	private static void calculateShortestDistance(Vertex u) {
@@ -113,8 +134,8 @@ public class Dijsktra {
 		}
 
 		for (Vertex target : z) {
-			if (getShortestDistance(u) + getDistance(u, target) < getShortestDistance(target)) {
-				vertexDist.put(target, getShortestDistance(u) + getDistance(u, target));
+			if (getMinDistance(u) + getDistance(u, target) < getMinDistance(target)) {
+				vertexDist.put(target, getMinDistance(u) + getDistance(u, target));
 				path.put(target, u);
 				notSeenVertices.add(target);
 			}

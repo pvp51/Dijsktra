@@ -36,7 +36,7 @@ public class Edge {
     }
     
     public String toString(){
-        return "({" + one + ", " + two + "}, " + weight + ")";
+        return "{(" + one + ", " + two + "), " + weight + "}";
     }
       
 }

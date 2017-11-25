@@ -12,15 +12,6 @@ public class Graph {
 		this.edges = new HashMap<Integer, Edge>();
 	}
 
-	public Graph(ArrayList<Vertex> vertices){
-		this.vertices = new HashMap<String, Vertex>();
-		this.edges = new HashMap<Integer, Edge>();
-
-		for(Vertex v: vertices){
-			this.vertices.put(v.getName(), v);
-		}   
-	}
-
 	public boolean addEdge(String oneLabel, String twoLabel, int weight){
 		Vertex one = null;
 		Vertex first = this.vertices.get(oneLabel);
@@ -69,32 +60,6 @@ public class Graph {
 		return true;
 	}
 
-
-	public boolean addEdge(Edge e){
-		if(e.getOne().equals(e.getTwo())){
-			return false;   
-		}
-
-		//ensures the Edge is not in the Graph
-		if(edges.containsKey(e.hashCode())){
-			return false;
-		}
-
-		//and that the Edge isn't already incident to one of the vertices
-		else if(e.getOne().containsNeighbor(e) || e.getTwo().containsNeighbor(e)){
-			return false;
-		}
-
-		edges.put(e.hashCode(), e);
-		e.getOne().addNeighbor(e);
-		e.getTwo().addNeighbor(e);
-		return true;
-	}
-
-	public boolean containsVertex(Vertex vertex){
-		return this.vertices.get(vertex.getName()) != null;
-	}
-
 	public Vertex getVertex(String label){
 		return vertices.get(label);
 	}
@@ -103,10 +68,6 @@ public class Graph {
 		
 		vertices.put(vertex.getName(), vertex);
 		return true;
-	}
-
-	public Set<String> vertexKeys(){
-		return this.vertices.keySet();
 	}
 
 	public Set<Edge> getEdges(){

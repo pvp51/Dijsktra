@@ -5,28 +5,24 @@ import java.util.List;
 
 public class Vertex {
 
-    private List<Edge> neighborhood;
+    private List<Edge> neighbors;
     private String name;
     
     public Vertex(String label){
         this.name = label;
-        this.neighborhood = new ArrayList<>();
+        this.neighbors = new ArrayList<>();
     }
     
     public void addNeighbor(Edge edge){
-        if(this.neighborhood.contains(edge)){
+        if(this.neighbors.contains(edge)){
             return;
         }
         
-        this.neighborhood.add(edge);
+        this.neighbors.add(edge);
     }
     
     public boolean containsNeighbor(Edge other){
-        return this.neighborhood.contains(other);
-    }
-  
-    public int getNeighborCount(){
-        return this.neighborhood.size();
+        return this.neighbors.contains(other);
     }
     
     public String getName(){
@@ -34,11 +30,11 @@ public class Vertex {
     }
     
     public Edge getNeighbor(int index){
-        return this.neighborhood.get(index);
+        return this.neighbors.get(index);
     }
     
     public List<Edge> getNeighbors(){
-        return new ArrayList<>(this.neighborhood);
+        return new ArrayList<>(this.neighbors);
     }
     
     public String toString(){
