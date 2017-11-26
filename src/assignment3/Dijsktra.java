@@ -48,8 +48,6 @@ public class Dijsktra {
 		System.out.println("Please enter the destination vertex: ");		
 		destination = scan.nextLine();
 
-		System.out.println(g.getEdges());
-		System.out.println(g.getVertices());
 		System.out.println("Calculating Shortest Distance now");
 		System.out.println("Shortest Distance: "+dijsktra(g, g.getVertex(source)));
 		System.out.println("Calculating Shortest Path");
@@ -102,7 +100,6 @@ public class Dijsktra {
 				}
 			}
 		}
-		System.out.println(vertexDist);
 		return vertexDist.get(g.getVertex(destination));
 
 	}
